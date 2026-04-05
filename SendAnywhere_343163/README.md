@@ -9,7 +9,7 @@ A premium, fully functional habit tracker built with **HTML, CSS, and vanilla Ja
 | | Link |
 |---|---|
 | *📁 Git Repository* | [github.com/yourusername/habitflow](https://github.com/yourusername/habitflow) |
-| *🌐 Live Project* | [habitflow.netlify.app](https://habitflow.netlify.app) |
+| *🌐 Live Project* | [habitflow.netlify.app] https://habitracker0631.netlify.app |
 
 ---
 
