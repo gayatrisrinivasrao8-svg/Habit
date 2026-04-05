@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HabitFlow – A beautiful, modern habit tracker. Track your daily habits, streaks, and progress with a premium experience." />
+  <title>HabitFlow – Your Daily Habit Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ========== AUTH CONTAINER ========== -->
+  <div id="auth-container" class="auth-container">
+    <div class="auth-card">
+      <div class="brand auth-brand">
+        <div class="brand-icon" aria-hidden="true">✦</div>
+        <h1 class="brand-name">HabitFlow</h1>
+      </div>
+      
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form" novalidate>
+        <h2 class="auth-title">Welcome back</h2>
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email</label>
+          <input class="form-input" type="email" id="login-email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <input class="form-input" type="password" id="login-password" placeholder="••••••••" required />
+        </div>
+        <span class="form-error hidden" id="login-error"></span>
+        <button type="submit" class="btn btn-primary auth-submit">Sign In</button>
+        <p class="auth-switch">Don't have an account? <button type="button" id="go-to-register" class="btn-link">Register here</button></p>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form hidden" novalidate>
+        <h2 class="auth-title">Create an account</h2>
+        <div class="form-group">
+          <label class="form-label" for="reg-email">Email</label>
+          <input class="form-input" type="email" id="reg-email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Password</label>
+          <input class="form-input" type="password" id="reg-password" placeholder="••••••••" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-confirm">Confirm Pwd</label>
+          <input class="form-input" type="password" id="reg-confirm" placeholder="••••••••" required />
+        </div>
+        <span class="form-error hidden" id="reg-error"></span>
+        <button type="submit" class="btn btn-primary auth-submit">Register</button>
+        <p class="auth-switch">Already have an account? <button type="button" id="go-to-login" class="btn-link">Sign In</button></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== APP CONTAINER ========== -->
+  <div id="app-container" class="hidden">
+
+  <!-- ========== HEADER ========== -->
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">✦</div>
+        <h1 class="brand-name">HabitFlow</h1>
+      </div>
+      <div class="header-controls">
+        <button
+          id="dark-mode-toggle"
+          class="icon-btn"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode"
+        >
+          <span class="icon-moon" aria-hidden="true">🌙</span>
+          <span class="icon-sun" aria-hidden="true">☀️</span>
+        </button>
+        <button
+          id="logout-btn"
+          class="btn btn-ghost"
+          aria-label="Log out"
+        >
+          Logout
+        </button>
+        <button
+          id="add-habit-btn"
+          class="btn btn-primary"
+          aria-label="Add a new habit"
+        >
+          <span aria-hidden="true">+</span> New Habit
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== QUOTE BANNER ========== -->
+  <div class="quote-banner" role="complementary" aria-label="Daily motivation">
+    <p class="quote-text" id="daily-quote">Loading your daily inspiration…</p>
+  </div>
+
+  <!-- ========== MAIN APP ========== -->
+  <main class="app-main" role="main">
+
+    <!-- ---- STATS ROW ---- -->
+    <section class="stats-row" aria-label="Overall statistics">
+      <div class="stat-card" id="stat-total">
+        <div class="stat-value" id="stat-total-val">0</div>
+        <div class="stat-label">Total Habits</div>
+      </div>
+      <div class="stat-card" id="stat-today">
+        <div class="stat-value" id="stat-today-val">0%</div>
+        <div class="stat-label">Done Today</div>
+      </div>
+      <div class="stat-card" id="stat-streak">
+        <div class="stat-value" id="stat-streak-val">🔥 0</div>
+        <div class="stat-label">Best Streak</div>
+      </div>
+      <div class="stat-card" id="stat-week">
+        <div class="stat-value" id="stat-week-val">0%</div>
+        <div class="stat-label">This Week</div>
+      </div>
+    </section>
+
+    <!-- ---- MONTH NAV + HABIT TRACKER ---- -->
+    <section class="tracker-section" aria-label="Habit calendar">
+
+      <!-- Month navigation -->
+      <div class="month-nav" role="navigation" aria-label="Month navigation">
+        <button id="prev-month-btn" class="icon-btn" aria-label="Previous month">&#8249;</button>
+        <h2 class="month-title" id="month-title">March 2026</h2>
+        <button id="next-month-btn" class="icon-btn" aria-label="Next month">&#8250;</button>
+      </div>
+
+      <!-- Calendar grid wrapper (scrollable on mobile) -->
+      <div class="calendar-scroll-wrapper" role="region" aria-label="Habit calendar grid">
+        <!-- Weekday headers -->
+        <div class="day-headers" aria-hidden="true">
+          <div>Su</div><div>Mo</div><div>Tu</div><div>We</div>
+          <div>Th</div><div>Fr</div><div>Sa</div>
+        </div>
+
+        <!-- Habit rows rendered here by JS -->
+        <div id="habit-grid" class="habit-grid"></div>
+      </div>
+    </section>
+
+    <!-- ---- WEEKLY CHART ---- -->
+    <section class="weekly-chart-section" aria-label="Weekly progress chart">
+      <h3 class="section-title">Weekly Overview</h3>
+      <div class="chart-container">
+        <canvas id="weekly-chart" aria-label="Bar chart showing habit completion per day this week" role="img"></canvas>
+      </div>
+      <div class="chart-legend" id="chart-legend" aria-hidden="true"></div>
+    </section>
+
+    <!-- ---- EMPTY STATE ---- -->
+    <div class="empty-state hidden" id="empty-state" role="status" aria-live="polite">
+      <div class="empty-icon" aria-hidden="true">🌱</div>
+      <h3 class="empty-title">Plant your first habit</h3>
+      <p class="empty-desc">Start small. Press "New Habit" and begin your journey toward consistency.</p>
+      <button class="btn btn-primary" id="empty-add-btn" aria-label="Add your first habit">
+        ✦ Add First Habit
+      </button>
+    </div>
+
+  </main>
+  </div> <!-- end app-container -->
+
+  <!-- ========== ADD / EDIT HABIT MODAL ========== -->
+  <div
+    class="modal-overlay hidden"
+    id="habit-modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    aria-describedby="modal-desc"
+  >
+    <div class="modal-card" id="habit-modal">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">✕</button>
+      <h2 class="modal-title" id="modal-title">New Habit</h2>
+      <p class="modal-desc hidden" id="modal-desc">Fill in the details below to create your habit.</p>
+
+      <form id="habit-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="habit-name-input">Habit name</label>
+          <input
+            class="form-input"
+            type="text"
+            id="habit-name-input"
+            name="habit-name"
+            placeholder="e.g. Morning meditation"
+            maxlength="60"
+            required
+            aria-required="true"
+            autocomplete="off"
+          />
+          <span class="form-error hidden" id="name-error" role="alert">Please enter a habit name.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Habit color</label>
+          <div class="color-picker" role="group" aria-label="Choose a habit color">
+            <button type="button" class="color-swatch active" data-color="#a78bfa" style="background:#a78bfa" aria-label="Lavender purple" aria-pressed="true"></button>
+            <button type="button" class="color-swatch" data-color="#60a5fa" style="background:#60a5fa" aria-label="Sky blue" aria-pressed="false"></button>
+            <button type="button" class="color-swatch" data-color="#34d399" style="background:#34d399" aria-label="Mint green" aria-pressed="false"></button>
+            <button type="button" class="color-swatch" data-color="#f97316" style="background:#f97316" aria-label="Soft orange" aria-pressed="false"></button>
+            <button type="button" class="color-swatch" data-color="#f472b6" style="background:#f472b6" aria-label="Rose pink" aria-pressed="false"></button>
+            <button type="button" class="color-swatch" data-color="#facc15" style="background:#facc15" aria-label="Sunny yellow" aria-pressed="false"></button>
+            <button type="button" class="color-swatch" data-color="#2dd4bf" style="background:#2dd4bf" aria-label="Teal" aria-pressed="false"></button>
+            <button type="button" class="color-swatch" data-color="#fb7185" style="background:#fb7185" aria-label="Coral red" aria-pressed="false"></button>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="modal-save-btn">Save Habit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========== DELETE CONFIRM MODAL ========== -->
+  <div
+    class="modal-overlay hidden"
+    id="delete-modal-overlay"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="delete-modal-title"
+    aria-describedby="delete-modal-desc"
+  >
+    <div class="modal-card modal-card--sm">
+      <h2 class="modal-title" id="delete-modal-title">Delete Habit?</h2>
+      <p class="modal-desc" id="delete-modal-desc">This will permanently remove the habit and all its history. This cannot be undone.</p>
+      <div class="form-actions">
+        <button class="btn btn-ghost" id="delete-cancel-btn">Keep it</button>
+        <button class="btn btn-danger" id="delete-confirm-btn">Yes, delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TOAST NOTIFICATIONS ========== -->
+  <div class="toast-container" id="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
